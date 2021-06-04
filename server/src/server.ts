@@ -1,17 +1,9 @@
-import express from 'express';
+import express, { response } from 'express';
+import routes from './routes';
 
 const app = express();
 
-app.get('/users', (request, response) => {
-    console.log('Listagem de usuário');
-    // JSON
-    response.json([
-        'Diego',
-        'Cláudia',
-        'Kelly',
-        'Daniel',
-        'Heloisa'
-    ]);
-})
+app.use(express.json()); //Por padrão o express não entende que fazemos API Rest, usar este comando.
+app.use(routes);
 
 app.listen(3333);
