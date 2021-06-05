@@ -1,7 +1,19 @@
-import { Request, Response } from 'express'
+import { Request, response, Response } from 'express'
 import knex from '../database/connection';
 
 class PointsController {
+    async show(req: Request, res: Response) {
+        const { id } = req.params;
+
+        const point = await knex('points').where('id', id).first();
+
+        if(!point) {
+            return res.status(400).json({ message: 'Point not found.' });
+        }
+        
+        return res.json(point)
+    };
+
     async create(req: Request, res: Response) {
         const {
             name,
@@ -44,7 +56,7 @@ class PointsController {
             id: point_id,
             ...point
          });
-    }
+    };
 }
 
 export default PointsController;
